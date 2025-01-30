@@ -1,4 +1,5 @@
 import { RiBarChartHorizontalLine } from "react-icons/ri";
+import { BiExitFullscreen } from "react-icons/bi";
 
 export default function Header() {
   return (
@@ -11,7 +12,9 @@ export default function Header() {
           </div>
         </div>
         <div className="rightnav flex gap-2">
-          <div></div>
+          <div>
+            <BiExitFullscreen />
+          </div>
         </div>
       </header>
     </>
