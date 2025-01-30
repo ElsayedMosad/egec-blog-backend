@@ -1,8 +1,19 @@
+import { RiBarChartHorizontalLine } from "react-icons/ri";
+
 export default function Header() {
   return (
     <>
-      <h1 className=" text-3xl">Site is live</h1>
-      {/* <h1 className="text-3xl font-bold underline">Hello world!</h1> */}
+      <header className="header flex flex-sb">
+        <div className="logo flex gap-2">
+          <h1>ADMIN</h1>
+          <div className="headerham flex flex-center">
+            <RiBarChartHorizontalLine />
+          </div>
+        </div>
+        <div className="rightnav flex gap-2">
+          <div></div>
+        </div>
+      </header>
     </>
   );
 }

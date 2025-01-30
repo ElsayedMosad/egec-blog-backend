@@ -118,7 +118,7 @@ export default function Aside() {
           </li>
           <li
             className={
-              activeLink === "/shops"
+              activeLink === "/gallery"
                 ? "navactive flex-col flex-left"
                 : "flex-col flex-left"
             }
