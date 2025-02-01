@@ -158,6 +158,7 @@ export default function Aside({ asideOpen, handleAsideOpen }) {
             </li>
           </Link>
         </ul>
+        <button className="logoutbtn">Logout</button>
       </aside>
     </>
   );
