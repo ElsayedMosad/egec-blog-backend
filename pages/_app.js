@@ -5,16 +5,18 @@ import { useState } from "react";
 export default function App({ Component, pageProps }) {
   const [asideOpen, setAsideOpen] = useState(false);
   const AsideClickOpen = () => {
-    console.log(asideOpen);
+    // console.log(asideOpen);
     setAsideOpen(!asideOpen);
   };
 
   return (
     <>
       <ParentComponent appOpen={asideOpen} appAsideOpen={AsideClickOpen} />
-      <main>
-        <div class={asideOpen ? "container" : "container active"}>
-          <Component {...pageProps} />
+      <main className="">
+        <div className="">
+          <div className={asideOpen ? "container active" : "container"}>
+            <Component {...pageProps} />
+          </div>
         </div>
       </main>
     </>

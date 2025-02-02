@@ -18,10 +18,10 @@ export default function Aside({ asideOpen, handleAsideOpen }) {
     setClicked(!clicked);
   };
   const handleLinkClick = (link) => {
-    console.log(link);
+    // console.log(link);
     setActiveLink((prevActive) => (prevActive === link ? null : link));
-    console.log(link);
-    console.log(activeLink);
+    // console.log(link);
+    // console.log(activeLink);
 
     setClicked(false);
   };

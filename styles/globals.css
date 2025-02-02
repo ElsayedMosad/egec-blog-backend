@@ -190,24 +190,17 @@ body {
 /* Custom */
 
 /* ================================================== */
-
 .container {
-    /* max-width: 1650px; */
-    /* width: calc(100% - 200px); */
-    /* width: 100%; */
-    width: calc(100% - 200px);
-    margin: auto;
-    margin-top: 120px;
-    margin-left: 200px;
-    /* padding: 20px; */
-    transition: 0.3s ease-in-out;
+    min-width: 100%;
+    transition: min-width 0.3s ease-in-out, margin-left 0.3s ease-in-out;
+    margin-left: 0;
 }
 
 .container.active {
-    width: 100%;
-    margin: 0;
-}
-
+    min-width: calc(100% - 200px);
+    margin-top: 120px;
+    margin-left: 200px;
+  }
 .po-fixed-center {
     position: fixed;
     top: 50%;
@@ -1801,9 +1794,9 @@ button {
         display: none;
     }
     .container {
-        max-width: 100%;
-        margin: auto;
-        margin: 0;
+        /* max-width: 100%; */
+        /* margin: auto; */
+        /* margin: 0; */
         transition: 0.3s ease-in-out;
     }
     .leftprofile_details{

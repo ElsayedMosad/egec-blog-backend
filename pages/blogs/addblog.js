@@ -1,4 +1,5 @@
 import Blog from "@/components/Blog";
+// import BlogTwo from "@/components/BlogTwo";
 import { SiBloglovin } from "react-icons/si";
 
 export default function Addblog() {
