@@ -7,7 +7,7 @@ import Spinner from "./Spinner";
 export default function Blog() {
   return (
     <>
-      <form className="bg-gray-100 shadow-lg rounded-2xl p-6 ">
+      <form className="bg-gray-100 shadow-lg rounded-2xl p-6 addWebsiteform">
         {/* Title Field */}
         <div className="flex flex-col items-start mb-4">
           <label htmlFor="title" className="text-gray-800 font-semibold w-full">
@@ -136,6 +136,8 @@ export default function Blog() {
                           </button>
                         </div>
                       );
+                    } else {
+                      return <code {...props}>{children}</code>;
                     }
                   },
                 }}
@@ -146,12 +148,31 @@ export default function Blog() {
           />
         </div>
 
+        <div className="w-100 flex flex-col flex-left mb-2">
+          <label htmlFor="tages">Tags</label>
+          <select
+            name="tags"
+            id="tags"
+            className="w-full p-3 border border-gray-300 rounded-lg shadow-sm bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            multiple
+          >
+            <option value="Node Js">Node Js</option>
+            <option value="React Js">React Js</option>
+            <option value="Next Js">Next Js</option>
+            <option value="Css">CSS</option>
+            <option value="Digital Marketing">Digital Marketing</option>
+            <option value="Flutter Dev">Flutter Dev</option>
+            <option value="Database">Database</option>
+            <option value="Deployment">Deployment</option>
+          </select>
+        </div>
+
         {/* Submit Button */}
         <button
           type="submit"
-          className="w-full bg-indigo-600 text-white font-semibold py-3 mt-2 rounded-lg shadow-md hover:bg-indigo-700 transition duration-300"
+          className="w-full bg-indigo-600 text-white font-semibold py-3 mt-2 rounded-lg shadow-md hover:bg-indigo-700 transition duration-300 addwebbtn"
         >
-          Publish Article
+          Save Blog
         </button>
       </form>
     </>
