@@ -13,8 +13,8 @@ export default function App({ Component, pageProps }) {
     <>
       <ParentComponent appOpen={asideOpen} appAsideOpen={AsideClickOpen} />
       <main className="">
-        <div className=" ">
-          <div className={asideOpen ? "container active" : "container"}>
+        <div className=" flex ">
+          <div className={asideOpen ? "mycontainer active" : "mycontainer  "}>
             <Component {...pageProps} />
           </div>
         </div>
