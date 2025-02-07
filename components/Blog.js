@@ -3,11 +3,56 @@ import MarkdownEditor from "react-markdown-editor-lite";
 import "react-markdown-editor-lite/lib/index.css";
 import { FaCloudUploadAlt } from "react-icons/fa";
 import Spinner from "./Spinner";
-
+import { useState } from "react";
+import { useRouter } from "next/router";
+import axios from "axios";
+import toast from "react-hot-toast";
 export default function Blog() {
+  const [redirect, setRedirect] = useState(false);
+  const router = useRouter();
+  const [title, setTitle] = useState("");
+  const [slug, setSlug] = useState("");
+  const [images, setImages] = useState([]);
+  const [blogcategory, setBlogcategory] = useState("");
+  const [description, setDescription] = useState([]);
+  const [tags, setTags] = useState([]);
+  const [status, setStatus] = useState("");
+
+  const [isUploading, setIsUpLoading] = useState(false);
+  const uploadImagesQueue = [];
+
+  async function createBlog(ev) {
+    ev.prevenDefault();
+    const data = {
+      title,
+      slug,
+      images,
+      description,
+      blogcategory,
+      tags,
+      status,
+    };
+    if (_id) {
+      await axios.put("api/blogs", { ...data, _id });
+      toast.success("Data Updated");
+    } else {
+      await axios.post("api/blogs", data);
+      toast.success("Blog Created");
+    }
+    setRedirect(true);
+  }
+
+  const handleSlugChange = (ev) => {
+    const inputValue = ev.target.value;
+    const newSlug = inputValue.replace(/\s+/g, "-");
+    setSlug(newSlug);
+  };
   return (
     <>
-      <form className="bg-gray-100 shadow-lg rounded-2xl p-6 addWebsiteform">
+      <form
+        className="bg-gray-100 shadow-lg rounded-2xl p-6 addWebsiteform"
+        onSubmit={createBlog}
+      >
         {/* Title Field */}
         <div className="flex flex-col items-start mb-4">
           <label htmlFor="title" className="text-gray-800 font-semibold w-full">
@@ -18,6 +63,8 @@ export default function Blog() {
             id="title"
             placeholder="Enter small title"
             className="w-full p-3 border border-gray-300 rounded-lg shadow-sm bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            value={title}
+            onChange={(ev) => setTitle(ev.target.value)}
           />
         </div>
 
@@ -31,6 +78,8 @@ export default function Blog() {
             id="slug"
             placeholder="Enter Slug URL"
             className="w-full p-3 border border-gray-300 rounded-lg shadow-sm bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            value={slug}
+            onChange={handleSlugChange}
           />
         </div>
 

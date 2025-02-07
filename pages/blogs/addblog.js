@@ -5,8 +5,8 @@ import { SiBloglovin } from "react-icons/si";
 export default function Addblog() {
   return (
     <>
-      <div class="addblogspage">
-        <div class="titledashboard flex flex-sb">
+      <div className="addblogspage">
+        <div className="titledashboard flex flex-sb">
           <div>
             <h2>
               Add <span>Blog</span>
@@ -17,7 +17,7 @@ export default function Addblog() {
             <SiBloglovin /> <span>/</span> <span>Addblog</span>
           </div>
         </div>
-        <div class="blogsadd">
+        <div className="blogsadd">
           <Blog />
         </div>
       </div>
