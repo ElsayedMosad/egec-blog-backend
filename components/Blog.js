@@ -23,6 +23,9 @@ export default function Blog({ _id }) {
 
   async function createBlog(ev) {
     ev.preventDefault();
+    if (isUploading) {
+      await Promise.all(uploadImagesQueue);
+    }
     const data = {
       title,
       slug,
@@ -40,6 +43,26 @@ export default function Blog({ _id }) {
       toast.success("Blog Created");
     }
     setRedirect(true);
+  }
+
+  async function uploadImages(ev) {
+    const files = ev.target?.files;
+    if (files?.length > 0) {
+      setIsUpLoading(true);
+      for (const file of files) {
+        const data = new FormData();
+        data.append("file", file);
+        uploadImagesQueue.push(
+          axios.post("/api/upload", data).then((res) => {
+            setImages((oldImages) => [...oldImages, ...res.data.links]);
+          })
+        );
+      }
+    }
+  }
+  if (redirect) {
+    router.push("/blogs");
+    return null;
   }
 
   const handleSlugChange = (ev) => {
