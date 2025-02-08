@@ -7,7 +7,7 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
 import toast from "react-hot-toast";
-export default function Blog() {
+export default function Blog({ _id }) {
   const [redirect, setRedirect] = useState(false);
   const router = useRouter();
   const [title, setTitle] = useState("");
@@ -22,7 +22,7 @@ export default function Blog() {
   const uploadImagesQueue = [];
 
   async function createBlog(ev) {
-    ev.prevenDefault();
+    ev.preventDefault();
     const data = {
       title,
       slug,
@@ -94,6 +94,12 @@ export default function Blog() {
           <select
             id="category"
             className="w-full p-3 border border-gray-300 rounded-lg shadow-sm bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            onChange={(e) =>
+              setBlogcategory(
+                Array.from(e.target.selectedOptions, (option) => option.value)
+              )
+            }
+            value={blogcategory}
           >
             <option value="Node Js">Node Js</option>
             <option value="React Js">React Js</option>
@@ -204,6 +210,12 @@ export default function Blog() {
             id="tags"
             className="w-full p-3 border border-gray-300 rounded-lg shadow-sm bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
             multiple
+            onChange={(e) =>
+              setTags(
+                Array.from(e.target.selectedOptions, (option) => option.value)
+              )
+            }
+            value={tags}
           >
             <option value="Node Js">Node Js</option>
             <option value="React Js">React Js</option>
@@ -213,6 +225,19 @@ export default function Blog() {
             <option value="Flutter Dev">Flutter Dev</option>
             <option value="Database">Database</option>
             <option value="Deployment">Deployment</option>
+          </select>
+        </div>
+        <div className="w-100 flex flex-col flex-left mb-2">
+          <label htmlFor="status">Status</label>
+          <select
+            name="status"
+            id="status"
+            onChange={(ev) => setStatus(ev.target.value)}
+            value={status}
+          >
+            <option value="">No select</option>
+            <option value="React Js">Draft</option>
+            <option value="publish">Publish</option>
           </select>
         </div>
 
