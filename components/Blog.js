@@ -7,6 +7,9 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { ReactSortable } from "react-sortablejs";
+import { MdDeleteForever } from "react-icons/md";
+
 export default function Blog({ _id }) {
   const [redirect, setRedirect] = useState(false);
   const router = useRouter();
@@ -14,7 +17,7 @@ export default function Blog({ _id }) {
   const [slug, setSlug] = useState("");
   const [images, setImages] = useState([]);
   const [blogcategory, setBlogcategory] = useState("");
-  const [description, setDescription] = useState([]);
+  const [description, setDescription] = useState("");
   const [tags, setTags] = useState([]);
   const [status, setStatus] = useState("");
 
@@ -36,11 +39,13 @@ export default function Blog({ _id }) {
       status,
     };
     if (_id) {
-      await axios.put("api/blogs", { ...data, _id });
+      await axios.put("/api/blogs", { ...data, _id });
       toast.success("Data Updated");
+      // router.push("/blogs");
     } else {
-      await axios.post("api/blogs", data);
+      await axios.post("/api/blogs", data);
       toast.success("Blog Created");
+      // router.push("/blogs");
     }
     setRedirect(true);
   }
@@ -58,18 +63,45 @@ export default function Blog({ _id }) {
           })
         );
       }
+      await Promise.all(uploadImagesQueue);
+      setIsUpLoading(false);
+      toast.success("images Uploaded");
+    } else {
+      toast.error("An error occurred");
     }
   }
   if (redirect) {
     router.push("/blogs");
     return null;
   }
+  // function updateImagesOrder(image) {
+  //   setImages(images);
+  // }
+  function updateImagesOrder(newImages) {
+    setImages([...newImages]);
+  }
+  // function handleDeleteImage(index) {
+  //   const updateImages = [...images];
+  //   uploadImages.splice(index, 1);
+  //   toast.success("Image Deleted Successfully");
+  // }
 
+  function handleDeleteImage(index) {
+    const updatedImages = [...images];
+    updatedImages.splice(index, 1);
+    setImages(updatedImages);
+    toast.success("Image Deleted Successfully");
+  }
+  // const handleSlugChange = (ev) => {
+  //   const inputValue = ev.target.value;
+  //   const newSlug = inputValue.replace(/\s+/g, "-");
+
+  //   setSlug(newSlug);
+  // };
   const handleSlugChange = (ev) => {
-    const inputValue = ev.target.value;
-    const newSlug = inputValue.replace(/\s+/g, "-");
-    setSlug(newSlug);
+    setSlug(ev.target.value.trim().replace(/\s+/g, "-").toLowerCase());
   };
+
   return (
     <>
       <form
@@ -150,6 +182,7 @@ export default function Blog({ _id }) {
               className="absolute inset-0 w-full h-full cursor-pointer"
               accept="image/*"
               multiple
+              onChange={uploadImages}
             />
             <div className="flex flex-col items-center">
               <FaCloudUploadAlt className="text-indigo-500 text-3xl" />
@@ -159,16 +192,38 @@ export default function Blog({ _id }) {
             </div>
           </div>
           <div className="w-100 flex flex-left mt-1">
-            <Spinner />
+            {isUploading && <Spinner />}
           </div>
         </div>
-
+        {!isUploading && (
+          <div className="flex">
+            <ReactSortable
+              list={Array.isArray(images) ? images : []}
+              setList={updateImagesOrder}
+              animation={200}
+              className="flex gap-1"
+            >
+              {images?.map((link, index) => (
+                <div key={link} className="uploadedimg">
+                  <img src={link} alt="image" className="object-cover" />
+                  <div className="deleteimg">
+                    <button onClick={() => handleDeleteImage(index)}>
+                      <MdDeleteForever />
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </ReactSortable>
+          </div>
+        )}
         <div className="description w-100 flex flex-col flex-left nb-2">
           <label htmlFor="description">
             Blog content (for image: first upload and copy link and paste in
             ![alt text](link))
           </label>
           <MarkdownEditor
+            value={description}
+            onChange={(ev) => setDescription(ev.text)}
             style={{ width: "100%", height: "400px" }}
             renderHTML={(text) => (
               <ReactMarkdown
