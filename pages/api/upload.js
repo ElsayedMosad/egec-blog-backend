@@ -1,4 +1,3 @@
-import { mongooseConnect } from "@/lib/mongoose";
 import cloudinary from "cloudinary";
 import multiparty from "multiparty";
 
@@ -9,11 +8,9 @@ cloudinary.v2.config({
 });
 
 export default async function handle(req, res) {
-  await mongooseConnect();
-
-  const form = new multiparty.Form();
-
   try {
+    const form = new multiparty.Form();
+
     const { fields, files } = await new Promise((resolve, reject) => {
       form.parse(req, (err, fields, files) => {
         if (err) reject(err);
@@ -21,23 +18,30 @@ export default async function handle(req, res) {
       });
     });
 
-    if (!files.file) {
+    if (!files || !files.file || files.file.length === 0) {
       return res.status(400).json({ error: "No files uploaded" });
     }
 
     const links = [];
     for (const file of files.file) {
-      const result = await cloudinary.v2.uploader.upload(file.path, {
-        folder: "vbm-admin",
-        public_id: `file_${Date.now()}`,
-        resource_type: "auto",
-      });
-      links.push(result.secure_url);
+      try {
+        const result = await cloudinary.v2.uploader.upload(file.path, {
+          folder: "vbm-admin",
+          public_id: `file_${Date.now()}`,
+          resource_type: "auto",
+        });
+        links.push(result.secure_url);
+      } catch (uploadError) {
+        console.error("Cloudinary Upload Error:", uploadError);
+        return res
+          .status(500)
+          .json({ error: "Error uploading file to Cloudinary" });
+      }
     }
 
     return res.status(200).json({ links });
   } catch (error) {
-    console.error("Upload Error:", error);
+    console.error("Server Error:", error);
     return res.status(500).json({ error: "Internal Server Error" });
   }
 }
