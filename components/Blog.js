@@ -24,11 +24,44 @@ export default function Blog({ _id }) {
   const [isUploading, setIsUpLoading] = useState(false);
   const uploadImagesQueue = [];
 
+  // async function createBlog(ev) {
+  //   ev.preventDefault();
+  //   if (isUploading) {
+  //     await Promise.all(uploadImagesQueue);
+  //   }
+  //   const data = {
+  //     title,
+  //     slug,
+  //     images,
+  //     description,
+  //     blogcategory,
+  //     tags,
+  //     status,
+  //   };
+  //   if (_id) {
+  //     await axios.put("/api/blogs", { ...data, _id });
+  //     toast.success("Data Updated");
+  //     // router.push("/blogs");
+  //   } else {
+  //     await axios.post("/api/blogs", data);
+  //     toast.success("Blog Created");
+  //     // router.push("/blogs");
+  //   }
+  //   setRedirect(true);
+  // }
+
   async function createBlog(ev) {
     ev.preventDefault();
+
+    if (!title || !slug || !description || !blogcategory || !status) {
+      toast.error("Please fill in all required fields!");
+      return;
+    }
+
     if (isUploading) {
       await Promise.all(uploadImagesQueue);
     }
+
     const data = {
       title,
       slug,
@@ -38,38 +71,69 @@ export default function Blog({ _id }) {
       tags,
       status,
     };
-    if (_id) {
-      await axios.put("/api/blogs", { ...data, _id });
-      toast.success("Data Updated");
-      // router.push("/blogs");
-    } else {
-      await axios.post("/api/blogs", data);
-      toast.success("Blog Created");
-      // router.push("/blogs");
+
+    try {
+      if (_id) {
+        await axios.put("/api/blogs", { ...data, _id });
+        toast.success("Blog Updated");
+      } else {
+        await axios.post("/api/blogs", data);
+        toast.success("Blog Created");
+      }
+      setRedirect(true);
+    } catch (error) {
+      console.error(
+        "Error creating/updating blog:",
+        error.response?.data || error.message
+      );
+      toast.error("An error occurred while saving the blog.");
     }
-    setRedirect(true);
   }
 
+  // async function uploadImages(ev) {
+  //   const files = ev.target?.files;
+  //   if (files?.length > 0) {
+  //     setIsUpLoading(true);
+  //     for (const file of files) {
+  //       const data = new FormData();
+  //       data.append("file", file);
+  //       uploadImagesQueue.push(
+  //         axios.post("/api/upload", data).then((res) => {
+  //           setImages((oldImages) => [...oldImages, ...res.data.links]);
+  //         })
+  //       );
+  //     }
+  //     await Promise.all(uploadImagesQueue);
+  //     setIsUpLoading(false);
+  //     toast.success("images Uploaded");
+  //   } else {
+  //     toast.error("An error occurred");
+  //   }
+  // }
   async function uploadImages(ev) {
     const files = ev.target?.files;
     if (files?.length > 0) {
       setIsUpLoading(true);
+      const uploadPromises = [];
+
       for (const file of files) {
         const data = new FormData();
         data.append("file", file);
-        uploadImagesQueue.push(
+        uploadPromises.push(
           axios.post("/api/upload", data).then((res) => {
             setImages((oldImages) => [...oldImages, ...res.data.links]);
           })
         );
       }
-      await Promise.all(uploadImagesQueue);
+
+      await Promise.all(uploadPromises);
       setIsUpLoading(false);
-      toast.success("images Uploaded");
+      toast.success("Images Uploaded");
     } else {
-      toast.error("An error occurred");
+      toast.error("An error occurred while uploading images.");
     }
   }
+
   if (redirect) {
     router.push("/blogs");
     return null;

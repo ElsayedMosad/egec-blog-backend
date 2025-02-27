@@ -193,19 +193,17 @@ body {
 .mycontainer {
     width: 100%;
     
-    transition: width 0.3s ease-in-out, margin-left 0.3s ease-in-out, margin-left  0.3s ease-in-out;
-    /* margin-left: 0; */
+    transition: width 0.3s ease-in-out, margin-left 0.3s ease-in-out, margin-left  0.3s ease-in-out, transform 0.3s ease-in-out 25ms;
     max-width: 1400px;
-    /* margin-left: auto; */
-    /* margin-right: auto; */
-    /* margin-left: auto; */
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .mycontainer.active {
     width: calc(100% - 200px);
-    /* min-width: auto; */
-    /* margin-top: 120px; */
-    margin-left: 200px;
+    transform: translateX(100px); /* moves the element 50px along the x-axis */
+
+
 }
 .po-fixed-center {
     position: fixed;
