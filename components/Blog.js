@@ -10,16 +10,26 @@ import toast from "react-hot-toast";
 import { ReactSortable } from "react-sortablejs";
 import { MdDeleteForever } from "react-icons/md";
 
-export default function Blog({ _id }) {
+export default function Blog({
+  _id,
+  title: existingTitle,
+  slug: existingSlug,
+  images: existingImages,
+  description: existingDescription,
+  blogcategory: existingBlogcategory,
+  tags: existingTags,
+  status: existingStatus,
+}) {
   const [redirect, setRedirect] = useState(false);
   const router = useRouter();
-  const [title, setTitle] = useState("");
-  const [slug, setSlug] = useState("");
-  const [images, setImages] = useState([]);
-  const [blogcategory, setBlogcategory] = useState("");
-  const [description, setDescription] = useState("");
-  const [tags, setTags] = useState([]);
-  const [status, setStatus] = useState("");
+
+  const [title, setTitle] = useState(existingTitle || "");
+  const [slug, setSlug] = useState(existingSlug || "");
+  const [images, setImages] = useState(existingImages || []);
+  const [blogcategory, setBlogcategory] = useState(existingBlogcategory || "");
+  const [description, setDescription] = useState(existingDescription || "");
+  const [tags, setTags] = useState(existingTags || []);
+  const [status, setStatus] = useState(existingStatus || "");
 
   const [isUploading, setIsUpLoading] = useState(false);
   const uploadImagesQueue = [];
@@ -378,7 +388,7 @@ export default function Blog({ _id }) {
             value={status}
           >
             <option value="">No select</option>
-            <option value="React Js">Draft</option>
+            <option value="draft">Draft</option>
             <option value="publish">Publish</option>
           </select>
         </div>

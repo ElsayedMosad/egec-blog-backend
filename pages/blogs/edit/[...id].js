@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { BsPostcard } from "react-icons/bs";
 import { router, useRouter } from "next/router";
 import LoginLayout from "@/components/LoginLayout";
+import { SiBloglovin } from "react-icons/si";
 
 export default function EditProduct() {
   const router = useRouter();
@@ -22,5 +23,25 @@ export default function EditProduct() {
     }
   }, [id]);
 
-  return <></>;
+  return (
+    <>
+      <Head>
+        <title>Update Blog</title>
+      </Head>
+      <div className="blogpage">
+        <div className="titledashboard flex flex-sb">
+          <div>
+            <h2>
+              Edit <span>{productInfo?.title}</span>
+            </h2>
+            <h3>ADMIN PANEL</h3>
+          </div>
+          <div className="breadcrumb">
+            <SiBloglovin /> <span>/</span> <span>Edit Blog</span>
+          </div>
+        </div>
+        <div className="mt-3">{productInfo && <Blog {...productInfo} />} </div>
+      </div>
+    </>
+  );
 }
