@@ -491,7 +491,7 @@ button {
 
 .four_card {
     position: relative;
-    width: 380px;
+    width: 300px;
     height: 250px;
     background-image: linear-gradient(to bottom right, #9358e0, #571f9e);
     box-shadow: 2px 12px 26px 3px rgba(126, 55, 216, .3);
