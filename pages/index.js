@@ -167,6 +167,121 @@ export default function Home() {
             </div>
             <Bar data={data} options={options} />
           </div>
+
+          <div className="right_salescont">
+            <div>
+              <h3>Blogs By Category</h3>
+              <ul className="creative-dots">
+                <li className="big-dot"></li>
+                <li className="semi-big-dot"></li>
+                <li className="medium-dot"></li>
+                <li className="semi-medium-dot"></li>
+                <li className="semi-small-dot"></li>
+                <li className="small-dot"></li>
+              </ul>
+            </div>
+            <div className="blogscategory flex flex-center">
+              <table>
+                <thead>
+                  <tr>
+                    <td>Topics</td>
+                    <td>Data</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Node Js</td>
+                    <td>
+                      {
+                        blogsData.filter(
+                          (dat) => dat.blogcategory[0] === "Node Js"
+                        ).length
+                      }
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>React Js</td>
+                    <td>
+                      {
+                        blogsData.filter(
+                          (dat) => dat.blogcategory[0] === "React Js"
+                        ).length
+                      }
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Next Js</td>
+                    <td>
+                      {
+                        blogsData.filter(
+                          (dat) => dat.blogcategory[0] === "Next Js"
+                        ).length
+                      }
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Css</td>
+                    <td>
+                      {
+                        blogsData.filter((dat) => dat.blogcategory[0] === "Css")
+                          .length
+                      }
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Digital Marketing</td>
+                    <td>
+                      {
+                        blogsData.filter(
+                          (dat) => dat.blogcategory[0] === "Digital Marketing"
+                        ).length
+                      }
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Flutter Dev</td>
+                    <td>
+                      {
+                        blogsData.filter(
+                          (dat) => dat.blogcategory[0] === "Flutter Dev"
+                        ).length
+                      }
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Database</td>
+                    <td>
+                      {
+                        blogsData.filter(
+                          (dat) => dat.blogcategory[0] === "Database"
+                        ).length
+                      }
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Deployment</td>
+                    <td>
+                      {
+                        blogsData.filter(
+                          (dat) => dat.blogcategory[0] === "Deployment"
+                        ).length
+                      }
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Next Js</td>
+                    <td>
+                      {
+                        blogsData.filter(
+                          (dat) => dat.blogcategory[0] === "Next Js"
+                        ).length
+                      }
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
     </>
