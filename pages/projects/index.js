@@ -14,27 +14,32 @@ export default function Projects() {
   const { data: allData, loading } = useFetchData("/api/projects");
 
   // تصفية البيانات بناءً على البحث
-  const filteredBlogs =
+  const filteredProjects =
     searchQuery.trim() === ""
       ? allData
-      : allData.filter((blog) =>
-          blog.title.toLowerCase().includes(searchQuery.toLowerCase())
+      : allData.filter((project) =>
+          project.title.toLowerCase().includes(searchQuery.toLowerCase())
         );
 
   // حساب عدد المدونات بعد التصفية
-  const allBlog = filteredBlogs.length;
+  const allProject = filteredProjects.length;
 
   // تحديد المدونات لعرضها في الصفحة الحالية
-  const indexOfFirstBlog = (currentPage - 1) * perPage;
-  const indexOfLastBlog = currentPage * perPage;
-  const currentBlogs = filteredBlogs.slice(indexOfFirstBlog, indexOfLastBlog);
+  const indexOfFirstProject = (currentPage - 1) * perPage;
+  const indexOfLastProject = currentPage * perPage;
+  const currentProjects = filteredProjects.slice(
+    indexOfFirstProject,
+    indexOfLastProject
+  );
 
   // تصفية المدونات المنشورة فقط
-  const publishedBlogs = currentBlogs.filter((ab) => ab.status === "publish");
+  const publishedProjexts = currentProjects.filter(
+    (ab) => ab.status === "publish"
+  );
 
   // إنشاء أرقام الصفحات
   const pageNumbers = [];
-  for (let i = 1; i <= Math.ceil(allBlog / perPage); i++) {
+  for (let i = 1; i <= Math.ceil(allProject / perPage); i++) {
     pageNumbers.push(i);
   }
 
@@ -50,7 +55,7 @@ export default function Projects() {
           </div>
           <div className="breadcrumb">
             <SiBloglovin /> <span>/</span>
-            <span>Addblog</span>
+            <span>AddProject</span>
           </div>
         </div>
         <div className="blogstable">
@@ -79,39 +84,39 @@ export default function Projects() {
                     <Dataloading />
                   </td>
                 </tr>
-              ) : publishedBlogs.length === 0 ? (
+              ) : publishedProjexts.length === 0 ? (
                 <tr>
                   <td colSpan={4} className="text-center py-6 text-gray-500">
                     No Projects Found
                   </td>
                 </tr>
               ) : (
-                publishedBlogs.map((blog, index) => (
+                publishedProjexts.map((project, index) => (
                   <tr
-                    key={blog._id}
+                    key={project._id}
                     className="hover:bg-gray-100 transition duration-200"
                   >
                     <td className="px-5 py-4 text-center font-medium text-gray-700">
-                      {indexOfFirstBlog + index + 1}
+                      {indexOfFirstProject + index + 1}
                     </td>
                     <td className="px-5 py-4 text-center">
                       <img
-                        src={blog.images[0]}
-                        alt={blog.title}
+                        src={project.images[0]}
+                        alt={project.title}
                         className="w-16 h-16 object-cover rounded-md shadow-sm"
                       />
                     </td>
                     <td className="px-5 py-4 text-gray-800 font-semibold">
-                      {blog.title}
+                      {project.title}
                     </td>
                     <td className="px-5 py-4 text-center">
                       <div className="flex justify-center space-x-3">
-                        <Link href={`/blogs/edit/${blog._id}`}>
+                        <Link href={`/projects/edit/${project._id}`}>
                           <button className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1.5 rounded-md text-sm shadow-sm flex items-center">
                             <FaEdit className="mr-1" /> Edit
                           </button>
                         </Link>
-                        <Link href={`/blogs/delete/${blog._id}`}>
+                        <Link href={`/projects/delete/${project._id}`}>
                           <button className="bg-red-500 hover:bg-red-600 text-white px-3 py-1.5 rounded-md text-sm shadow-sm flex items-center">
                             <RiDeleteBin6Fill className="mr-1" /> Delete
                           </button>
