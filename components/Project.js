@@ -87,7 +87,7 @@ export default function Project({
         "Error creating/updating Project:",
         error.response?.data || error.message
       );
-      toast.error("An error occurred while saving the Projct.");
+      toast.error("An error occurred while saving the Project.");
     }
   }
 
@@ -183,13 +183,49 @@ export default function Project({
           />
         </div>
 
+        {/* Client Field */}
+
+        <div className="flex flex-col items-start mb-4">
+          <label
+            htmlFor="client"
+            className="text-gray-800 font-semibold w-full"
+          >
+            Client Name
+          </label>
+          <input
+            type="text"
+            id="client"
+            placeholder="Enter client Name"
+            className="w-full p-3 border border-gray-300 rounded-lg shadow-sm bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            value={client}
+            onChange={(ev) => setClient(ev.target.value)}
+          />
+        </div>
+
+        <div className="flex flex-col items-start mb-4">
+          <label
+            htmlFor="livepreview"
+            className="text-gray-800 font-semibold w-full"
+          >
+            livepreview
+          </label>
+          <input
+            type="text"
+            id="livepreview"
+            placeholder="Enter livepreview Name"
+            className="w-full p-3 border border-gray-300 rounded-lg shadow-sm bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            value={livepreview}
+            onChange={(ev) => setLivepreview(ev.target.value)}
+          />
+        </div>
+
         {/* Category Select */}
         <div className="flex flex-col items-start mb-4">
           <label
             htmlFor="category"
             className="text-gray-800 font-semibold w-full"
           >
-            Category:
+            Select Category:(for multi select press ctr + mouse left key)
           </label>
           <select
             id="category"
@@ -201,14 +237,13 @@ export default function Project({
             }
             value={projectcategory}
           >
-            <option value="Node Js">Node Js</option>
-            <option value="React Js">React Js</option>
-            <option value="Next Js">Next Js</option>
-            <option value="Css">CSS</option>
-            <option value="Digital Marketing">Digital Marketing</option>
-            <option value="Flutter Dev">Flutter Dev</option>
-            <option value="Database">Database</option>
-            <option value="Deployment">Deployment</option>
+            {/* <option value="">Select Category</option> */}
+            <option value="Website Development">Website Development</option>
+            <option value="App Development">App Development</option>
+            <option value="Design System">Design System</option>
+            <option value="Website Migration">Website Migration</option>
+            <option value="E-commerce Site">E-commerce Site</option>
+            <option value="Perfomance Evalution">Perfomance Evalution</option>
           </select>
         </div>
 
@@ -369,7 +404,7 @@ export default function Project({
           type="submit"
           className="w-full bg-indigo-600 text-white font-semibold py-3 mt-2 rounded-lg shadow-md hover:bg-indigo-700 transition duration-300 addwebbtn"
         >
-          Save Blog
+          Save Project
         </button>
       </form>
     </>
